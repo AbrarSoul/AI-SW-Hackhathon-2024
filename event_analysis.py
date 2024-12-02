@@ -9,23 +9,26 @@ from nltk.corpus import stopwords
 file_path = '2_tapahtumat_agrihubi.xlsx'  # Adjust the file path as needed
 event_data = pd.read_excel(file_path)
 
-# Ensure required columns exist
-required_columns = ['Tiivistelmä', 'Sisältö', 'Avainsanat']
-for column in required_columns:
-    if column not in event_data.columns:
-        print(f"Column {column} is missing.")
-        exit()
+# Columns to analyze based on your criteria
+columns_to_analyze = [
+    "Otsikko", "Tiivistelmä", "Sisältö", "Aiheet",
+    "Avainsanat", "Tapahtuman kohderyhmä", "Tyyppi", "Hanketiedot", "Aiheet", "Tyyppi"
+]
 
-# Combine text columns for analysis
-event_data['combined_text'] = (
-    event_data['Tiivistelmä'].fillna('') + ' ' +
-    event_data['Sisältö'].fillna('') + ' ' +
-    event_data['Avainsanat'].fillna('')
+# Ensure required columns exist
+missing_columns = [col for col in columns_to_analyze if col not in event_data.columns]
+if missing_columns:
+    print(f"Missing columns: {', '.join(missing_columns)}")
+    exit()
+
+# Combine text from the specified columns for analysis
+event_data['combined_text'] = event_data[columns_to_analyze].fillna('').apply(
+    lambda row: ' '.join(map(str, row)), axis=1
 )
 
 # Tokenize and clean text
-nltk.download('punkt')
-nltk.download('stopwords')
+nltk.download('punkt', quiet=True)
+nltk.download('stopwords', quiet=True)
 stop_words = set(stopwords.words('finnish'))  # Adjust for the dataset language
 
 all_words = []
@@ -44,11 +47,14 @@ for keyword, freq in top_keywords:
     print(f"{keyword}: {freq}")
 
 # Visualization
-keywords, frequencies = zip(*top_keywords)
-plt.figure(figsize=(10, 6))
-plt.barh(keywords, frequencies)
-plt.xlabel('Frequency')
-plt.ylabel('Keywords')
-plt.title('Top Keywords in Event Data')
-plt.gca().invert_yaxis()
-plt.show()
+if top_keywords:
+    keywords, frequencies = zip(*top_keywords)
+    plt.figure(figsize=(10, 6))
+    plt.barh(keywords, frequencies)
+    plt.xlabel('Frequency')
+    plt.ylabel('Keywords')
+    plt.title('Top Keywords in Event Data')
+    plt.gca().invert_yaxis()
+    plt.show()
+else:
+    print("No keywords found for visualization.")

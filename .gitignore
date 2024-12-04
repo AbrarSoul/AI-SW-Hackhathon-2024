@@ -1,0 +1,84 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environment
+*.env
+*.venv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Python tools
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Unit test / coverage reports
+*.cover
+*.log
+*.sql
+*.sqlite3
+
+# Local configuration files
+*.DS_Store
+*.swp
+*.swo
+*~
+
+# Operating system files
+Thumbs.db
+.DS_Store
+
+# Log files
+*.log
+
+# Python-specific compiled files
+*.pyo
+*.pyc
+*.pyd
+
+# Configuration files
+*.ini
+*.yaml
+*.yml
+
+# Streamlit config
+.streamlit/
+
+# Input files
+2_Suomen_CAP-suunnitelma.pdf
+2_tapahtumat_agrihubi.xlsx
+
+# Ignore all backup files
+*~
+*.bak
